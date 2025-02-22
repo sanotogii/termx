@@ -16,8 +16,6 @@ chat_session = model.start_chat(
   ]
 )
 
-chat_history = []
-chat_counter = 0
 
 try:
     while True:
