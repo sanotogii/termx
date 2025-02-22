@@ -32,6 +32,5 @@ try:
             break
         else:
             print(response.text)
-            chat_history+=input_msg
 except KeyboardInterrupt:
     print('\nbye!')
