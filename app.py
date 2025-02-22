@@ -5,6 +5,14 @@ import os
 
 config = Config()
 
+SYSTEM_CONTEXT = """You are a CLI helper bot. When providing solutions:
+- Keep answers short and concise
+- Focus on Ubuntu terminal commands
+- Avoid markdown formatting
+- Use ordered lists for steps
+- Provide practical CLI solutions
+- Keep explanations brief"""
+
 generation_config = config.generation_config
 model = genai.GenerativeModel(
   model_name="gemini-2.0-flash",
@@ -13,18 +21,20 @@ model = genai.GenerativeModel(
 )
 
 chat_session = model.start_chat(
-  history=[
-  ]
+  history=[{
+        "role": "user",
+        "parts": [SYSTEM_CONTEXT]
+    }]
 )
 
 
 try:
     while True:
         input_msg = input("❯ ")
-        msg =input_msg + ", keep it short, OS=UBUNTU, no markdown, if steps use ordered list, do not be very specific, give cli solutions"
+        msg = input_msg
         if input_msg:
             readline.add_history(input_msg)
-        response = chat_session.send_message(msg)
+        
         
         if msg.startswith("/help"):
             print("/q: quit")
@@ -34,6 +44,7 @@ try:
             print("bye!")
             break
         else:
+            response = chat_session.send_message(msg)
             print(response.text)
 except KeyboardInterrupt:
     print('bye!')
