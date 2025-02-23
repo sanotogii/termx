@@ -35,9 +35,11 @@ try:
         if input_msg:
             readline.add_history(input_msg)
         
-        
+
         if msg.startswith("/help"):
-            print("/q: quit")
+            print("/q: quit\nclear: self explanatory\n")
+        elif msg == "":
+            pass
         elif msg.startswith("clear"):
             os.system("clear")
         elif msg.startswith("/q" or "/quit"):
